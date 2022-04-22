@@ -1,6 +1,7 @@
 
 import React, {useState, useEffect} from 'react';
 import QRCode from 'qrcode.react'
+import Select from 'react-select'
 
 const QrCode = ({data}) => {
   const baseSiteUrl = 'https://attandence-bucket.s3.us-east-2.amazonaws.com/siteQR/'
@@ -15,6 +16,11 @@ const QrCode = ({data}) => {
       },[])
 
  
+      const sitesRecord = sites && sites.data && sites.data.map(s => ({
+        "value" : s.SitesName,
+        "label" : s.SitesName
+      }))
+      
       
 
   return (
@@ -30,15 +36,24 @@ const QrCode = ({data}) => {
       <h1>
        Site QR Downloader
       </h1>
-      <select required
+      {/* <select required
         value={selectedSite}
         onChange={e => setSelectedSite(e.target.value)}>
           <option value="">-Select Site-</option>
         {sites&& sites.data && sites.data.map(o => (
           <option key={o._id} value={o.SitesName}>{o.SitesName}</option>
         ))}
-      </select>
+      </select> */}
 
+      <Select
+        // defaultValue={selectedOption}
+        onChange={e => setSelectedSite(e.value)}
+        options={sitesRecord}
+        // ref={salesPersonRef}
+        // value={selectedOption}
+        placeholder="Type to Search..."
+        required
+      />
 
 
 {selectedSite &&
