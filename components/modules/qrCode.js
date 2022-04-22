@@ -59,7 +59,14 @@ const QrCode = ({data}) => {
 {selectedSite &&
 <div>
 <h3>Site Name: {selectedSite} </h3>
-<QRCode value={selectedSite} size="250" id="qr-gen" />
+{/* <QRCode value={selectedSite} size="250" id="qr-gen" /> */}
+<embed
+    src={baseSiteUrl+selectedSite.replaceAll(' ', '') + '.pdf'}
+    type="application/pdf"
+    frameBorder="0"
+    
+    width="100%" height="2100px"
+></embed>
 <br/>
 <button
                 onClick={(e) => {
