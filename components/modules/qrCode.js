@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import QRCode from 'qrcode.react'
 import Select from 'react-select'
+
 const logo = "/img/logo.png";
 const QrCode = ({data}) => {
   const baseSiteUrl = 'https://attandence-bucket.s3.us-east-2.amazonaws.com/siteQR/'
@@ -12,10 +13,15 @@ const QrCode = ({data}) => {
             // 4. Setting *dogImage* to the image url that we received from the response above
         .then(data => setSites(data))
       },[])
-      const sitesRecord = sites && sites.data && sites.data.sort((a, b) => a.SitesName.localeCompare(b.SitesName)) && sites.data.map(s => ({
+      const sitesRecord = sites && sites.data  && sites.data.sort((a, b) => a.SitesName.localeCompare(b.SitesName)) && sites.data.filter(data=>data.Site_switch==true).map(s => ({
         "value" : s.SitesName,
         "label" : s.SitesName
       }))
+
+  
+   
+    
+
   return (
     <div>
       <title>Site QR Generator</title>
@@ -61,6 +67,9 @@ const QrCode = ({data}) => {
               >
                 Download
               </button>
+             
+        
+   
 <embed
     src={baseSiteUrl+selectedSite.replaceAll(' ', '') + '.pdf'}
     type="application/pdf"
