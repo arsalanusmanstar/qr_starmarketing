@@ -4,7 +4,7 @@ import Select from 'react-select'
 
 const logo = "/img/logo.png";
 const QrCode = ({data}) => {
-  const baseSiteUrl = 'https://attandence-bucket.s3.us-east-2.amazonaws.com/siteQR/'
+  const baseSiteUrl = 'https://attandence-bucket.s3.us-east-2.amazonaws.com/idBasedSiteQR/'
  const [sites, setSites] = useState()
  const [selectedSite, setSelectedSite] = useState()
     useEffect(() => {
@@ -14,7 +14,7 @@ const QrCode = ({data}) => {
         .then(data => setSites(data))
       },[])
       const sitesRecord = sites && sites.data  && sites.data.sort((a, b) => a.SitesName.localeCompare(b.SitesName)) && sites.data.filter(data=>data.Site_switch==true).map(s => ({
-        "value" : s.SitesName,
+        "value" : s._id,
         "label" : s.SitesName
       }))
 
@@ -60,7 +60,7 @@ const QrCode = ({data}) => {
                 onClick={(e) => {
                   e.preventDefault()
                   window.open(
-                    baseSiteUrl + (selectedSite && selectedSite.replaceAll(' ', '')) + '.pdf',
+                    baseSiteUrl + selectedSite + '.pdf',
                     '_blank',
                   )
                 }}
@@ -71,7 +71,7 @@ const QrCode = ({data}) => {
         
    
 <embed
-    src={baseSiteUrl+selectedSite.replaceAll(' ', '') + '.pdf'}
+    src={baseSiteUrl + selectedSite + '.pdf'}
     type="application/pdf"
     frameBorder="0"
     width="100%" height="850px"
